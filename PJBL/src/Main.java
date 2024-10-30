@@ -69,11 +69,11 @@ class Medico extends Pessoa {
     }
 
     public void mostrarInformacoes() {
-        System.out.println("Médico: " + nome + ", Idade: " + idade + ", Especialidade: " + especialidade + "");
+        System.out.println("Médico: " + nome + ", Idade: " + idade + ", Especialidade: " + especialidade + ", Salário: " + salario);
     }
 
     public String toString() {
-        return "Médico " + nome + " (" + especialidade + ")";
+        return "Médico " + nome + " (" + especialidade + ")" + "= Salário: " + salario;
     }
 }
 
