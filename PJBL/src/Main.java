@@ -7,7 +7,7 @@ abstract class Pessoa {
     protected String nome;
     protected int idade;
 
-    public Pessoa(int CPF, String nome, int idade) {
+    public Pessoa(String CPF, String nome, int idade) {
         this.CPF = CPF;
         this.nome = nome;
         this.idade = idade;
@@ -50,8 +50,6 @@ class Medico extends Pessoa {
         this.salario = salario;
     }
 
-    puclic String
-
     public String getEspecialidade() {
         return especialidade;
     }
@@ -78,7 +76,14 @@ class Medico extends Pessoa {
 }
 
 class Paciente extends Pessoa {
-
+    String plano;
+    public Paciente (String nome, String CPF, int idade, String plano){
+        super (nome, CPF, idade);
+        this.plano = plano;
+    }
+    public sentirDor (){
+        System.out.println("AI AI!");
+    }
 }
 
 class Recepcionista extends Pessoa {
