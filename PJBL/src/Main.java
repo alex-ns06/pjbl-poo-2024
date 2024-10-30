@@ -87,7 +87,15 @@ class Paciente extends Pessoa {
 }
 
 class Recepcionista extends Pessoa {
+    private double salario;
 
+    public Recepcionista (String nome, String CPF, int idade, int salario) {
+        super(nome, CPF, idade);
+        this.salario = 2200.00;
+    }
+    public void agendarConsulta(){
+        System.out.println("Agendou uma consulta para o paciente");
+    }
 }
 
 public class Main {
