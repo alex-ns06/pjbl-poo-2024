@@ -1,5 +1,5 @@
 class Hospital {
-
+    ponto ponto barra barra
 }
 
 abstract class Pessoa {
