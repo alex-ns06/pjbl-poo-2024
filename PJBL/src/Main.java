@@ -23,12 +23,29 @@ abstract class Pessoa {
     }
 
 
-    public String getCPF() { return CPF; }
-    public void setCPF(String CPF) { this.CPF = CPF; }
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
-    public int getIdade() { return idade; }
-    public void setIdade(int idade) { this.idade = idade; }
+    public String getCPF() {
+        return CPF;
+    }
+
+    public void setCPF(String CPF) {
+        this.CPF = CPF;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getIdade() {
+        return idade;
+    }
+
+    public void setIdade(int idade) {
+        this.idade = idade;
+    }
 
 
     class Medico extends Pessoa {
@@ -41,10 +58,21 @@ abstract class Pessoa {
             this.CRM = CRM;
         }
 
-        public String getEspecialidade() { return especialidade; }
-        public void setEspecialidade(String especialidade) { this.especialidade = especialidade; }
-        public String getCRM() { return CRM; }
-        public void setCRM(String CRM) { this.CRM = CRM; }
+        public String getEspecialidade() {
+            return especialidade;
+        }
+
+        public void setEspecialidade(String especialidade) {
+            this.especialidade = especialidade;
+        }
+
+        public String getCRM() {
+            return CRM;
+        }
+
+        public void setCRM(String CRM) {
+            this.CRM = CRM;
+        }
 
         public void mostrarInformacoes() {
             System.out.println("Médico: " + nome + ", Idade: " + idade + ", Especialidade: " + especialidade);
@@ -64,8 +92,14 @@ abstract class Pessoa {
             super(CPF, nome, idade);
             this.plano = plano;
         }
-        public String getPlano() { return plano; }
-        public void setPlano(String plano) { this.plano = plano; }
+
+        public String getPlano() {
+            return plano;
+        }
+
+        public void setPlano(String plano) {
+            this.plano = plano;
+        }
 
         public void sentirDor() {
             System.out.println("AI AI!");
@@ -74,18 +108,19 @@ abstract class Pessoa {
 
 
     class Recepcionista extends Pessoa {
-        private double salario;
+        private String turno;
 
-        public Recepcionista(String CPF, String nome, int idade, double salario) {
-            super(CPF, nome, idade);
-            this.salario = salario;
+        public Recepcionista(String nome, String CPF, int idade, String turno) {
+            super(nome, CPF, idade);
+            this.turno = turno;
         }
 
-        public double getSalario() { return salario; }
-        public void setSalario(double salario) { this.salario = salario; }
-
         public void agendarConsulta() {
-            System.out.println("Agendou uma consulta para o paciente.");
+            System.out.printf("%S: Agendou uma consulta para o paciente\n", nome);
+        }
+
+        public void exibirInformacao() {
+            System.out.printf("Nome: %S\nTurno: %S\n", nome, turno);
         }
     }
 }
