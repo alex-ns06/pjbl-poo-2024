@@ -8,11 +8,11 @@ O projeto visa simular um sistema de gerenciamento de hospital usando conceitos 
 
 ## Funcionalidades
 
-- **Cadastro de Pacientes**: Adicionar e editar informações de pacientes, como nome, idade, histórico médico, etc.
-- **Gerenciamento de Médicos**: Cadastro e gestão das informações dos médicos, incluindo especialidades e horários de atendimento.
-- **Controle de Funcionários**: Registrar e gerenciar informações de outros funcionários do hospital, como enfermeiros e pessoal administrativo.
-- **Agenda de Consultas e Internações**: Agendar consultas e internações, registrando data, hora e médico responsável.
-- **Relatórios**: Geração de relatórios para acompanhamento de internações, consultas e informações dos pacientes.
+- **Verificação de Plano de pacientes**: Conferir se o usuário tem plano ou não.
+- **Gerenciamento de Médicos**: Cadastro e gestão das informações dos médicos.
+- **Controle de Funcionários**: Conferir turno e nome de funcionários gerais.
+- **Agenda de Consultas**: Agendar consultas e médico responsável.
+- **Relatórios**: Relatório de consultas e informações dos pacientes.
 
 ## Estrutura do Projeto
 
