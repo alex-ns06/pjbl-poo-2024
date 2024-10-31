@@ -1,5 +1,10 @@
 class Hospital {
-    ponto ponto barra barra
+    private list<Medico> medicos;
+    private list<Paciente> pacientes;
+
+    public Hospital () {
+
+    }
 }
 
 abstract class Pessoa {
@@ -43,11 +48,13 @@ abstract class Pessoa {
 class Medico extends Pessoa {
     private String especialidade;
     private double salario;
+    private String CRM;
 
-    public Medico(String CPF, String nome, int idade, String especialidades) {
+    public Medico(String CPF, String nome, int idade, String especialidades, double salario, String CRM) {
         super(CPF, nome, idade);
         this.especialidade = especialidade;
         this.salario = salario;
+        this.CRM = CRM;
     }
 
     public String getEspecialidade() {
@@ -64,6 +71,14 @@ class Medico extends Pessoa {
 
     public void setSalario {
         this.salario = salario;
+    }
+
+    public String getCRM() {
+        return CRM;
+    }
+
+    public void setCRM() {
+        this.CRM = CRM;
     }
 
     public void mostrarInformacoes() {
