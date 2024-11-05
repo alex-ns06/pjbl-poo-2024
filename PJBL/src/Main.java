@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
 class Hospital {
-    private ArrayList<Pessoa.Medico> medicos = new ArrayList<>();
-    private ArrayList<Pessoa.Paciente> pacientes = new ArrayList<>();
-    private ArrayList<Pessoa.Recepcionista> recepcionistas = new ArrayList<>();
+//    private ArrayList<Pessoa.Medico> medicos = new ArrayList<>();
+//    private ArrayList<Pessoa.Paciente> pacientes = new ArrayList<>();
+//    private ArrayList<Pessoa.Recepcionista> recepcionistas = new ArrayList<>();
     String nome;
 
     public Hospital() {
@@ -23,12 +23,30 @@ abstract class Pessoa {
     }
 
 
-    public String getCPF() { return CPF; }
-    public void setCPF(String CPF) { this.CPF = CPF; }
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
-    public int getIdade() { return idade; }
-    public void setIdade(int idade) { this.idade = idade; }
+    public String getCPF() {
+        return CPF;
+    }
+
+    public void setCPF(String CPF) {
+        this.CPF = CPF;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getIdade() {
+        return idade;
+    }
+
+    public void setIdade(int idade) {
+        this.idade = idade;
+    }
+}
 
 
     class Medico extends Pessoa {
@@ -41,10 +59,21 @@ abstract class Pessoa {
             this.CRM = CRM;
         }
 
-        public String getEspecialidade() { return especialidade; }
-        public void setEspecialidade(String especialidade) { this.especialidade = especialidade; }
-        public String getCRM() { return CRM; }
-        public void setCRM(String CRM) { this.CRM = CRM; }
+        public String getEspecialidade() {
+            return especialidade;
+        }
+
+        public void setEspecialidade(String especialidade) {
+            this.especialidade = especialidade;
+        }
+
+        public String getCRM() {
+            return CRM;
+        }
+
+        public void setCRM(String CRM) {
+            this.CRM = CRM;
+        }
 
         public void mostrarInformacoes() {
             System.out.println("Médico: " + nome + ", Idade: " + idade + ", Especialidade: " + especialidade);
@@ -64,34 +93,66 @@ abstract class Pessoa {
             super(CPF, nome, idade);
             this.plano = plano;
         }
-        public String getPlano() { return plano; }
-        public void setPlano(String plano) { this.plano = plano; }
+
+        public String getPlano() {
+            return plano;
+        }
+
+        public void setPlano(String plano) {
+            this.plano = plano;
+        }
 
         public void sentirDor() {
             System.out.println("AI AI!");
+        }
+
+        public void verificarPlano() throws SemPlano {
+            if (plano == null || plano.trim().isEmpty()){ // Verifica se o campo "plano" está vazio ou se está preenchido apenas com espaços
+                throw new SemPlano("Plano indisponível para o usuário " + nome);
+            }
         }
     }
 
 
     class Recepcionista extends Pessoa {
-        private double salario;
+        private String turno;
 
-        public Recepcionista(String CPF, String nome, int idade, double salario) {
-            super(CPF, nome, idade);
-            this.salario = salario;
+        public Recepcionista(String nome, String CPF, int idade, String turno) {
+            super(nome, CPF, idade);
+            this.turno = turno;
         }
-
-        public double getSalario() { return salario; }
-        public void setSalario(double salario) { this.salario = salario; }
 
         public void agendarConsulta() {
-            System.out.println("Agendou uma consulta para o paciente.");
+            System.out.printf("%S: Agendou uma consulta para o paciente\n", nome);
+        }
+
+        public void exibirInformacao() {
+            System.out.printf("Nome: %S\nTurno: %S\n", nome, turno);
         }
     }
-}
+    class SemPlano extends Exception {
+        public SemPlano(String message) {
+            super (message);
+        }
+    }
+
 
 public class Main {
     public static void main(String[] args) {
-        
+        Paciente teste1 = new Paciente ("12345678910", "Mascos", 55, "Ouro");
+        Paciente teste2 = new Paciente ("12465478990", "Johnatan da nova geração", 22, " ");
+
+        try {
+            teste1.verificarPlano();
+            System.out.printf("%S tem um plano %S\n", teste1.getNome(), teste1.getPlano());
+        } catch (SemPlano e){
+            System.out.println(e.getMessage());
+        }
+        try {
+            teste2.verificarPlano();
+            System.out.printf("%S tem um plano %S\n", teste2.getNome(), teste2.getPlano());
+        } catch (SemPlano e){
+            System.out.println(e.getMessage());
+        }
     }
 }
