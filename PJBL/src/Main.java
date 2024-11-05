@@ -1,11 +1,16 @@
 import java.util.ArrayList;
 
-class Hospital {
-//    private ArrayList<Pessoa.Medico> medicos = new ArrayList<>();
-//    private ArrayList<Pessoa.Paciente> pacientes = new ArrayList<>();
-//    private ArrayList<Pessoa.Recepcionista> recepcionistas = new ArrayList<>();
-    String nome;
+class SemPlano extends Exception {
+    public SemPlano(String message) {
+        super (message);
+    }
+}
 
+class Hospital {
+    private ArrayList<Medico> medicos = new ArrayList<>();
+    private ArrayList<Paciente> pacientes = new ArrayList<>();
+    private ArrayList<Recepcionista> recepcionistas = new ArrayList<>();
+    String nome;
     public Hospital() {
 
     }
@@ -130,17 +135,12 @@ abstract class Pessoa {
             System.out.printf("Nome: %S\nTurno: %S\n", nome, turno);
         }
     }
-    class SemPlano extends Exception {
-        public SemPlano(String message) {
-            super (message);
-        }
-    }
 
 
 public class Main {
     public static void main(String[] args) {
         Paciente teste1 = new Paciente ("12345678910", "Mascos", 55, "Ouro");
-        Paciente teste2 = new Paciente ("12465478990", "Johnatan da nova geração", 22, " ");
+        Paciente teste2 = new Paciente ("12465478990", "Johnatan da nova geração", 22, "");
 
         try {
             teste1.verificarPlano();
