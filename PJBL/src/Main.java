@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
 class Hospital {
-    private ArrayList<Pessoa.Medico> medicos = new ArrayList<>();
-    private ArrayList<Pessoa.Paciente> pacientes = new ArrayList<>();
-    private ArrayList<Pessoa.Recepcionista> recepcionistas = new ArrayList<>();
+//    private ArrayList<Pessoa.Medico> medicos = new ArrayList<>();
+//    private ArrayList<Pessoa.Paciente> pacientes = new ArrayList<>();
+//    private ArrayList<Pessoa.Recepcionista> recepcionistas = new ArrayList<>();
     String nome;
 
     public Hospital() {
@@ -108,7 +108,7 @@ abstract class Pessoa {
 
         public void verificarPlano() throws SemPlano {
             if (plano == null || plano.trim().isEmpty()){ // Verifica se o campo "plano" está vazio ou se está preenchido apenas com espaços
-                throw new SemPlano("Plano indisponível para o usuário " + nome)
+                throw new SemPlano("Plano indisponível para o usuário " + nome);
             }
         }
     }
@@ -139,9 +139,20 @@ abstract class Pessoa {
 
 public class Main {
     public static void main(String[] args) {
-        Paciente teste1 = new paciente ("12345678910", "Mascos" 55, "Ouro");
-        Paciente teste2 = new paciente ("12465478990", "Johnatan da nova geração", 22, " ");
+        Paciente teste1 = new Paciente ("12345678910", "Mascos", 55, "Ouro");
+        Paciente teste2 = new Paciente ("12465478990", "Johnatan da nova geração", 22, " ");
 
-        System.out.println("testado main");
+        try {
+            teste1.verificarPlano();
+            System.out.printf("%S tem um plano %S\n", teste1.getNome(), teste1.getPlano());
+        } catch (SemPlano e){
+            System.out.println(e.getMessage());
+        }
+        try {
+            teste2.verificarPlano();
+            System.out.printf("%S tem um plano %S\n", teste2.getNome(), teste2.getPlano());
+        } catch (SemPlano e){
+            System.out.println(e.getMessage());
+        }
     }
 }
