@@ -46,6 +46,7 @@ abstract class Pessoa {
     public void setIdade(int idade) {
         this.idade = idade;
     }
+}
 
 
     class Medico extends Pessoa {
@@ -104,6 +105,12 @@ abstract class Pessoa {
         public void sentirDor() {
             System.out.println("AI AI!");
         }
+
+        public void verificarPlano() throws SemPlano {
+            if (plano == null || plano.trim().isEmpty()){ // Verifica se o campo "plano" está vazio ou se está preenchido apenas com espaços
+                throw new SemPlano("Plano indisponível para o usuário " + nome)
+            }
+        }
     }
 
 
@@ -123,9 +130,18 @@ abstract class Pessoa {
             System.out.printf("Nome: %S\nTurno: %S\n", nome, turno);
         }
     }
-}
+    class SemPlano extends Exception {
+        public SemPlano(String message) {
+            super (message);
+        }
+    }
+
 
 public class Main {
     public static void main(String[] args) {
+        Paciente teste1 = new paciente ("12345678910", "Mascos" 55, "Ouro");
+        Paciente teste2 = new paciente ("12465478990", "Johnatan da nova geração", 22, " ");
+
+        System.out.println("testado main");
     }
 }
