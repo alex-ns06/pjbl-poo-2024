@@ -6,6 +6,12 @@ import java.util.*;
 import java.util.List;
 import java.util.Timer;
 
+class CampoVazioException extends Exception {
+    public CampoVazioException(String mensagem) {
+        super(mensagem);
+    }
+}
+
 class Consulta {
     String CPF;
     String especialidade;
@@ -112,7 +118,7 @@ class Recepcionista extends Pessoa {
 }
 
 class Medico extends Pessoa {
-    private String especialidade;
+    private static String especialidade;
 
     public Medico(String CPF, String nome, int idade, String especialidade) {
         super(CPF, nome, idade);
@@ -123,7 +129,16 @@ class Medico extends Pessoa {
     public String exibirDetalhes() {
         return "\nCPF: " + CPF + "\nNome: " + nome + "\nIdade: " + idade + "\nEspecialidade: " + especialidade + "\n\n";
     }
+static class Residente extends Medico {
+        public Residente (String CPF, String nome, int idade, String especialidade){
+            super(CPF, nome, idade, especialidade);
+        }
 
+    @Override
+    public String exibirDetalhes() {
+        return "\nCPF: " + CPF + "\nNome: " + nome + "\nIdade: " + idade + "\nEspecialização: " + especialidade + "\n\n";
+    }
+}
 
 
 }
@@ -134,6 +149,7 @@ class Hospital extends JFrame {
     private List<String> planosDeSaude;
     private List<Recepcionista> recepcionistas;
     private HashMap<String, List<Medico>> especialidadeMedicos = new HashMap<>();
+    private HashMap<String, List<Medico.Residente>> especialidadeResidentes = new HashMap<>();
     private JLabel relogioLabel;
 
     private void criarArquivosSeNaoExistirem() throws IOException {
@@ -180,6 +196,19 @@ class Hospital extends JFrame {
                 new Medico("765.356.350-31", "Dr. Brumado", 45, "Dermatologista"),
                 new Medico("203.828.350-85", "Dra. Souza", 50, "Dermatologista")
         ));
+        especialidadeResidentes.put("Neurologista", List.of(
+                new Medico.Residente("124.656.893-08", "Dr. Roacutan", 24, "Neurologista"),
+                new Medico.Residente("456.123.789-08", "Dr. Peneira", 24, "Neurologista")
+        ));
+        especialidadeResidentes.put("Dermatologista", List.of(
+                new Medico.Residente("124.656.893-08", "Dr. New", 23, "Dermatologista"),
+                new Medico.Residente("456.123.789-08", "Dra. Ferraz", 24, "Dermatologista")
+        ));
+        especialidadeResidentes.put("Cardiologista", List.of(
+                new Medico.Residente("456.987.412-45", "Dr. Old", 33, "Dermatologista"),
+                new Medico.Residente("159.753.486-65", "Dra. Jones", 24, "Dermatologista")
+        ));
+
 
         JPanel painelPrincipal = new JPanel(new BorderLayout());
         JPanel painelCentral = new JPanel(new GridLayout(6, 1, 20, 20));
@@ -445,11 +474,17 @@ class Hospital extends JFrame {
             String medico = (String) comboMedico.getSelectedItem();
             String recepcionista = (String) comboRecepcionista.getSelectedItem();
 
-
-            if (cpf.isEmpty() || especialidade == null || especialidade.isEmpty() || medico == null || medico.isEmpty() || recepcionista == null || recepcionista.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Preencha Todos os Campos", "Erro", JOptionPane.ERROR_MESSAGE);
-                return;
+        try {
+            if (cpf.isEmpty() || especialidade == null || especialidade.isEmpty() ||
+                    medico == null || medico.isEmpty() || recepcionista == null || recepcionista.isEmpty()) {
+                throw new CampoVazioException("Preencha todos os campos para continuar");
             }
+
+        }
+        catch (CampoVazioException v) {
+            JOptionPane.showMessageDialog(null, v.getMessage(), "Erro:", JOptionPane.ERROR_MESSAGE);
+        }
+
 
             //GPT
             Date data = (Date) spinnerData.getValue();
