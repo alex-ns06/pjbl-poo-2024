@@ -125,6 +125,14 @@ class Medico extends Pessoa {
         this.especialidade = especialidade;
     }
 
+    public String realizarConsulta(String nomemedico) {
+        return "Consulta está sendo realizada pelo\n" + "Médico: " + nomemedico + "\n\n";
+    }
+
+    public String getNome(){
+        return this.nome;
+    }
+
     @Override
     public String exibirDetalhes() {
         return "\nCPF: " + CPF + "\nNome: " + nome + "\nIdade: " + idade + "\nEspecialidade: " + especialidade + "\n\n";
@@ -134,6 +142,15 @@ class Medico extends Pessoa {
 class Residente extends Medico {
     public Residente (String CPF, String nome, int idade, String especialidade){
         super(CPF, nome, idade, especialidade);
+    }
+
+    public String getNome(){
+        return this.nome;
+    }
+
+    @Override
+    public String realizarConsulta(String nomeresidente) {
+        return "Consulta está sendo realizada pelo\n" + "Residente: " + nomeresidente + "\n\n";
     }
 
     @Override
@@ -161,9 +178,6 @@ class Hospital extends JFrame {
         if (arquivoPacientes.exists()) {
             return;
         } else {arquivoPacientes.createNewFile();}
-
-
-
     }
 
     public Hospital() throws IOException {
@@ -309,6 +323,95 @@ class Hospital extends JFrame {
             detalhesFrame.setVisible(true);
         });
 
+        JButton botaoRealizarConsultas = new JButton("Realizar Consulta");
+
+        botaoRealizarConsultas.addActionListener(e -> {
+            JPanel painelConsulta = new JPanel(new GridLayout(2, 1, 20, 20));
+            JButton botaoMedico = new JButton("Consulta pelo Médico");
+            JButton botaoResidente = new JButton("Consulta pelo Residente");
+
+            painelConsulta.add(botaoMedico);
+            painelConsulta.add(botaoResidente);
+
+            botaoMedico.addActionListener(ex -> {
+                JPanel painelBuscaMedico = new JPanel(new GridLayout(3, 1, 10, 10));
+                JLabel labelMedico = new JLabel("Digite o nome do médico: ");
+                JTextField fieldMedico = new JTextField();
+                JButton botaoConsultaMedico = new JButton("Realizar Consulta");
+
+                painelBuscaMedico.add(labelMedico);
+                painelBuscaMedico.add(fieldMedico);
+                painelBuscaMedico.add(botaoConsultaMedico);
+
+                botaoConsultaMedico.addActionListener(exe -> {
+                    ArrayList<Medico> medicosConsulta = new ArrayList<>();
+                    for (List<Medico> medicoList : especialidadeMedicos.values()) {
+                        medicosConsulta.addAll(medicoList);
+                    }
+
+                    for (Medico medico : medicosConsulta) {
+                        if (medico.getNome().equals(fieldMedico.getText())) {
+                            JTextArea medicoArea = new JTextArea();
+                            JScrollPane medicoScrollPane = new JScrollPane(medicoArea);
+                            String medicoTexto = medico.realizarConsulta(fieldMedico.getText());
+                            medicoArea.setText(medicoTexto);
+                            JFrame detalhesFrame = new JFrame("Detalhes da Consulta");
+                            detalhesFrame.add(medicoScrollPane);
+                            detalhesFrame.setSize(600, 400);
+                            detalhesFrame.setVisible(true);
+                            return;
+                        }
+                    }
+
+                    JOptionPane.showMessageDialog(painelConsulta, "Médico não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+                });
+
+                JOptionPane.showMessageDialog(null, painelBuscaMedico, "Buscar Médico", JOptionPane.PLAIN_MESSAGE);
+            });
+
+            botaoResidente.addActionListener(ex -> {
+                JPanel painelBuscaResidente = new JPanel(new GridLayout(3, 1, 10, 10));
+                JLabel labelResidente = new JLabel("Digite o nome do Residente: ");
+                JTextField fieldResidente = new JTextField();
+                JButton botaoConsultaResidente = new JButton("Realizar Consulta");
+
+                painelBuscaResidente.add(labelResidente);
+                painelBuscaResidente.add(fieldResidente);
+                painelBuscaResidente.add(botaoConsultaResidente);
+
+                botaoConsultaResidente.addActionListener(exe -> {
+                    ArrayList<Residente> residentesConsulta = new ArrayList<>();
+                    for (List<Residente> residenteList : especialidadeResidentes.values()) {
+                        residentesConsulta.addAll(residenteList);
+                    }
+
+                    for (Residente residente : residentesConsulta) {
+                        if (residente.getNome().equals(fieldResidente.getText())) {
+                            JTextArea residenteArea = new JTextArea();
+                            JScrollPane residenteScrollPane = new JScrollPane(residenteArea);
+                            String medicoTexto = residente.realizarConsulta(fieldResidente.getText());
+                            residenteArea.setText(medicoTexto);
+                            JFrame detalhesFrame = new JFrame("Detalhes da Consulta");
+                            detalhesFrame.add(residenteScrollPane);
+                            detalhesFrame.setSize(600, 400);
+                            detalhesFrame.setVisible(true);
+                            return;
+                        }
+                    }
+
+                    JOptionPane.showMessageDialog(painelConsulta, "Residente não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+                });
+
+                JOptionPane.showMessageDialog(null, painelBuscaResidente, "Buscar Residente", JOptionPane.PLAIN_MESSAGE);
+            });
+
+            JOptionPane.showMessageDialog(null, painelConsulta, "Realizar Consulta", JOptionPane.PLAIN_MESSAGE);
+        });
+
+
+
+
+
 
         painelCentral.add(botaoCadastrarPaciente);
         painelCentral.add(botaoMarcarConsulta);
@@ -317,6 +420,7 @@ class Hospital extends JFrame {
         painelCentral.add(botaoDetalhesResidentes);
         painelCentral.add(botaoDetalhesRecepcionistas);
         painelCentral.add(botaoDetalhesPacientes);
+        painelCentral.add(botaoRealizarConsultas);
         painelPrincipal.add(painelCentral, BorderLayout.CENTER);
 
         relogioLabel = new JLabel();
